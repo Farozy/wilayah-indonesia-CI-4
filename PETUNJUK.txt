@@ -1,0 +1,11 @@
+Petunjuk:
+1. Copy semua file ke folder htdocs
+2. Ubah base url yang ada di app/Config/App.php
+3. Buka dengan browser
+Note: jalankan tanpa menggunakan spark
+
+Tutorial:
+https://jagowebdev.com/hmvc-pada-codeigniter-4/
+
+Premium:
+https://jagowebdev.com/members/produk/admin-template-dashboard-codeigniter-4-ci4
