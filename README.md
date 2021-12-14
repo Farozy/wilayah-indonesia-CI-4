@@ -1,56 +1,189 @@
-# API
+# API Data Wilayah Indonesia
 
-## API Wilayah Indonesia
+## Apa yang dimaksud API statis?
+API statis adalah API yang endpoint-nya terdiri dari file statis.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](http://codeigniter.com).
+## Keuntungan API statis?
+- Dapat dihosting pada static file hosting seperti Github Page, Netlify, dsb.
+- Proses lebih cepat karena tidak membutuhkan server-side scripting.
 
-This repository holds the distributable version of the framework,
-including the user guide. It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## Bagaimana cara kerjanya?
+- Daftar provinsi, kab/kota, kecamatan, kelurahan/desa disimpan pada folder data berupa file csv (agar mudah diedit).
+- Kemudian script generate.php dijalankan. Script ini akan membaca file csv didalam folder data, kemudian men-generate ribuan endpoint (file) kedalam folder static/api.
+- API siap 'dihidangkan'.
 
-More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
+## Saya mau hosting di Github saya sendiri, bagaimana caranya?
+- Fork repository ini.
+- Buka cmd/terminal.
+- git clone https://github.com/usernamekamu/api-wilayah-indonesia.git.
+- echo "" > hello.txt.
+- git add hello.txt.
+- git push origin master.
+- Tunggu beberapa saat sampai Github build Github Page kamu.
+- Buka URL https://usernamekamu.github.io/api-wilayah-indonesia.
 
-The user guide corresponding to this version of the framework can be found
-[here](https://codeigniter4.github.io/userguide/).
+# ENDPOINTS
+#### 1.  Mengambil Daftar Provinsi
+GET https://emsifa.github.io/api-wilayah-indonesia/api/provinces.json
+> Contoh Response
+```
+GET https://emsifa.github.io/api-wilayah-indonesia/api/provinces.json
+```
+```
+[
+  {
+    "id": "35",
+    "name": "JAWA TIMUR"
+  },
+  {
+    "id": "33",
+    "name": "JAWA TENGAH"
+  },
+  ...
+]
+```
+
+2.  Mengambil Daftar Kab/Kota pada Provinsi Tertentu
+> Contoh Response
+```
+GET https://emsifa.github.io/api-wilayah-indonesia/api/regencies/{provinceId}.json
+```
+Contoh untuk mengambil daftar kab/kota di provinsi Jawa Timur (ID = 135):
+```
+GET https://emsifa.github.io/api-wilayah-indonesia/api/regencies/135.json
+```
+> Contoh Response
+```
+[
+  {
+    "id": "3514",
+    "province_id": "35",
+    "name": "KABUPATEN PASURUAN"
+  },
+  {
+    "id": "3575",
+    "province_id": "35",
+    "name": "KOTA PASURUAN"
+  },
+  ...
+]
+```
+
+3.  Mengambil Daftar Kecamatan pada Kab/Kota Tertentu
+```
+GET https://emsifa.github.io/api-wilayah-indonesia/api/districts/{regencyId}.json
+```
+Contoh untuk mengambil daftar kecamatan di Pasuruan (ID = 3575):
+> Contoh Response
+```
+[
+  {
+    "id": "3514240",
+    "regency_id": "3514",
+    "name": "NGULING"
+  },
+  {
+    "id": "3514220",
+    "regency_id": "3514",
+    "name": "GRATI"
+  },
+  ...
+]
+```
+
+4.  Mengambil Daftar Kelurahan pada Kecamatan Tertentu
+```
+GET https://emsifa.github.io/api-wilayah-indonesia/api/villages/{districtId}.json
+```
+Contoh untuk mengambil daftar kelurahan di Nguling (ID = 3514220):
+> Contoh Response
+```
+[
+  {
+    "id": "3514240012",
+    "district_id": "3514240",
+    "name": "KEDAWANG"
+  },
+  {
+    "id": "3514240011",
+    "district_id": "3514240",
+    "name": "MLATEN"
+  },
+  ...
+]
+```
+
+5. Mengambil Data Provinsi berdasarkan ID Provinsi
+```
+GET https://emsifa.github.io/api-wilayah-indonesia/api/province/{provinceId}.json
+```
+Contoh untuk mengambil data provinsi Jawa Timur (ID = 35):
+```
+GET https://emsifa.github.io/api-wilayah-indonesia/api/province/35.json
+```
+> Contoh Response
+```
+{
+  "id": "35",
+  "name": "JAWA TIMUR"
+}
+```
+
+6.  Mengambil Data Kab/Kota berdasarkan ID Kab/Kota
+```
+GET https://emsifa.github.io/api-wilayah-indonesia/api/regency/{regencyId}.json
+```
+Contoh untuk mengambil data kabupaten Pasuruan (ID = 3514):
+```
+GET https://emsifa.github.io/api-wilayah-indonesia/api/regency/3514.json
+```
+> Contoh Response:
+```
+{
+  "id": "3514",
+  "province_id": "35",
+  "name": "KABUPATEN PASURUAN"
+}
+```
+
+7.  Mengambil Data Kecamatan berdasarkan ID Kecamatan
+```
+GET https://emsifa.github.io/api-wilayah-indonesia/api/district/{districtId}.json
+```
+Contoh untuk mengambil data kecamatan Nguling (ID = 3514240):
+```
+GET https://emsifa.github.io/api-wilayah-indonesia/api/district/3514240.json
+```
+> Contoh Response:
+```
+{
+  "id": "3514240",
+  "regency_id": "3514",
+  "name": "NGULING"
+}
+```
+
+8. Mengambil Data Kelurahan berdasarkan ID Kelurahan
+```
+GET https://emsifa.github.io/api-wilayah-indonesia/api/village/{villageId}.json
+```
+Contoh untuk mengambil data kelurahan Jambo Dalem (ID = 3514240012):
+```
+GET https://emsifa.github.io/api-wilayah-indonesia/api/village/3514240012.json
+```
+> Contoh Response:
+```
+{
+  "id": "3514240012",
+  "district_id": "3514240",
+  "name": "KEDAWANG"
+}
+```
 
 
-## Important Change with index.php
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
 
-**Please** read the user guide for a better explanation of how CI4 works!
 
-## Repository Management
 
-We use Github issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
-
-## Contributing
-
-We welcome contributions from the community.
-
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the development repository.
-
-## Server Requirements
-
-PHP version 7.3 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
-- xml (enabled by default - don't turn it off)
