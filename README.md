@@ -180,7 +180,12 @@ GET https://emsifa.github.io/api-wilayah-indonesia/api/village/3514240012.json
 }
 ```
 
+# Limitasi
+Karena API ini dihosting di Github Page, Github Page sendiri memberikan batasan bandwith 100GB/bulan. Rata-rata endpoint disini memiliki ukuran 1KB/endpoint, jadi kurang lebih request yang dapat digunakan adalah 100.000.000 request per bulan, atau sekitar 3.000.000 request/hari.
 
+Karena limitasi ini, disarankan untuk hosting API ini di github kamu sendiri.
+
+Untuk lebih detail tentang limitasi Github Page, bisa dilihat [disini](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#usage-limits)
 
 
 
